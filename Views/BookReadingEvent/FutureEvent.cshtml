@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BookReadingEventModel>
+
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Title</th>
+            <th scope="col">Date</th>
+            <th scope="col">Location</th>
+            <th scope="col">Event Type</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">More Details</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int a = 1; }
+        @foreach (var bookevent in Model)
+        {
+            if (User.Identity.IsAuthenticated && User.Identity.Name.Equals("myadmin@bookevents.com"))
+            {
+                if (bookevent.Date > DateTime.Now)
+                {
+                    <tr>
+                        <th scope="row">@a</th>
+                        <td>@bookevent.Title</td>
+                        <td>@bookevent.Date</td>
+                        <td>@bookevent.Location</td>
+                        <td>@bookevent.Type</td>
+                        <td>@bookevent.StartTime</td>
+                        <td><a asp-controller="bookreadingevent" asp-action="getbookreadingeventbytitle" asp-route-title="@bookevent.Title">Click Here</a></td>
+                        <td><a asp-controller="bookreadingevent" asp-action="editbookreadingevent" asp-route-title="@bookevent.Title">Click Here</a></td>
+                        <td><form method="post" asp-controller="bookreadingevent" asp-action="deleteevent" asp-route-title="@bookevent.Title"><button type="submit">Click Here</button></form></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                if (bookevent.Type.Equals("Public") && bookevent.Date > DateTime.Now)
+                {
+                    <tr>
+                        <th scope="row">@a</th>
+                        <td>@bookevent.Title</td>
+                        <td>@bookevent.Date</td>
+                        <td>@bookevent.Location</td>
+                        <td>@bookevent.Type</td>
+                        <td>@bookevent.StartTime</td>
+                        <td><a asp-controller="bookreadingevent" asp-action="getbookreadingeventbytitle" asp-route-title="@bookevent.Title">Click Here</a></td>
+                        <td>Only for Admin</td>
+                        <td>Only for Admin</td>
+                    </tr>
+                }
+            }
+            a++;
+        }
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signinmanager;
+
+@if (_signinmanager.IsSignedIn(User))
+{
+    <div>
+        <h5>Hello @User.FindFirst("UserName").Value</h5>
+        <a asp-controller="Account" asp-action="Logout">Logout</a>
+    </div>
+}
+else
+{
+    <div>
+        <ul style="list-style-type:none">
+            <li><a asp-controller="Account" asp-action="SignUp">Register</a></li>
+            <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+        </ul>
+    </div>
+}
+

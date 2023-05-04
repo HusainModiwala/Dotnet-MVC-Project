@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Event ";
+}
+
+@model BookReadingEventModel
+@{
+    int count = 0;
+    int dur = 0;
+    if (Model.InviteByMail != null)
+    {
+        count = Model.InviteByMail.Split(",").Length;
+    }
+    if (Model.Duration != null)
+    {
+        dur = (int)Model.Duration;
+    }
+}
+<h3>Event Details</h3>
+<br>
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+        @Model.Title
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Date:-</b> @Model.Date.Date</li>
+        <li class="list-group-item"><b>Start Time:-</b> @Model.StartTime</li>
+        <li class="list-group-item"><b>Location:-</b> @Model.Location</li>
+        <li class="list-group-item"><b>Duration:-</b> @dur hrs</li>
+        <li class="list-group-item"><b>Event Type:-</b> @Model.Type</li>
+        <li class="list-group-item"><b>Description:-</b> @Model.Description</li>
+        <li class="list-group-item"><b>Invitees:-</b> @count</li>
+    </ul>
+</div>
+<br/>
+<div>
+    <form method="get" asp-controller="Comment" asp-action="GetCommentsForEvent">
+        <input name="title" value="@Model.Title" hidden />
+        <button class="btn btn-primary" type="submit">Past Comments</button>
+    </form>
+</div>
+<br/>
+<div>
+    <form method="post" asp-controller="Comment" asp-action="SaveComment">
+        <input name="title" value="@Model.Title" class="form-control" hidden />
+        <textarea name="comment" class="form-control" placeholder="Post Comment"></textarea><br />
+        <input type ="submit" value="Submit" />
+    </form>
+</div>

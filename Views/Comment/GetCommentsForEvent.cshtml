@@ -1,0 +1,7 @@
+﻿@model IEnumerable<CommentModel>
+<ul style="list-style-type:none">
+    @foreach(var comm in Model)
+     {
+        <li>@comm.Comment</li>
+     }
+</ul>
